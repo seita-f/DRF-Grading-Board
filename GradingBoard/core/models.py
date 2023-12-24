@@ -88,10 +88,10 @@ class Post(models.Model):
         on_delete=models.CASCADE,
     )
     # user can choose those fields
-    school = models.ForeignKey(School, on_delete=models.CASCADE)
-    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
-    class_name = models.ForeignKey(Class, on_delete=models.CASCADE)
-    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+    school_id = models.ForeignKey(School, on_delete=models.CASCADE)
+    faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+    class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
+    professor_id = models.ForeignKey(Professor, on_delete=models.CASCADE)
     quality = models.IntegerField(choices=zip(range(1, 6), range(1, 6)))
     difficulty = models.IntegerField(choices=zip(range(1, 6), range(1, 6)))
     recommend = models.BooleanField(default=False) # Yes or No
