@@ -111,4 +111,4 @@ class ModelsTest(TestCase):
             modified_at=timezone.now(),
         )
 
-        self.assertEqual(str(post), post.description[:10])
+        self.assertEqual(str(post), post.description[:25])

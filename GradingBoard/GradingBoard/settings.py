@@ -38,15 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Local
+    # Local App
     'core',
     'user',
     'post',
 
-    # Third party
+    # Third Party App
     'rest_framework',
     'rest_framework.authtoken',
-    # 'drf_spectacular',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +133,18 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
+    # For the DEV and TEST
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+
+}
