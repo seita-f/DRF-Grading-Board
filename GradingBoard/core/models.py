@@ -104,7 +104,7 @@ class Post(models.Model):
     modified_at = models.DateTimeField(editable=False, blank=True, auto_now=True)  # auto_now => called everytime save() is called
 
     def __str__(self):
-        return self.description[:10]
+        return self.description[:25]
 
 
 ##### COMMENT MODEL #####
@@ -121,4 +121,4 @@ class Comment(models.Model):
     modified_at = models.DateTimeField(editable=False, blank=True, auto_now=True)  # auto_now => called everytime save() is called
 
     def __str__(self):
-        return self.message[:10]
+        return self.text[:25]
