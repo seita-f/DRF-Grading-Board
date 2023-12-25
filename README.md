@@ -37,6 +37,7 @@ They also can write comment and grade in its theread as well.
 | | `/post/<id>` | GET | view details of post |
 | | | PUT/PATCH | update post |
 | | | DELETE | delete post |
+| **COMMENT API** | `/post/<id>/comment` | GET| list all comments in post/<id> |
 
 
 
