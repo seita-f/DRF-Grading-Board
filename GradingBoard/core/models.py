@@ -83,20 +83,17 @@ class Professor(models.Model):
 ##### POST MODEL #####
 class Post(models.Model):
     """ Post object """
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-    # user can choose those fields
-    school_id = models.ForeignKey(School, on_delete=models.CASCADE)
-    faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE)
-    class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
-    professor_id = models.ForeignKey(Professor, on_delete=models.CASCADE)
+    # ForeignKey
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+    _class = models.ForeignKey(Class, on_delete=models.CASCADE)
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+
     quality = models.IntegerField(choices=zip(range(1, 6), range(1, 6)))
     difficulty = models.IntegerField(choices=zip(range(1, 6), range(1, 6)))
     recommend = models.BooleanField(default=False) # Yes or No
 
-    # fill manually
     description = models.TextField(blank=True)
 
     # auto fill
@@ -110,12 +107,10 @@ class Post(models.Model):
 ##### COMMENT MODEL #####
 class Comment(models.Model):
     """ Comments objects """
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-    # connect to Post model
+    # ForeignKey
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False, blank=False)
+
     text = models.TextField(blank=False)
     created_at = models.DateTimeField(editable=False, auto_now_add=True)
     modified_at = models.DateTimeField(editable=False, blank=True, auto_now=True)  # auto_now => called everytime save() is called

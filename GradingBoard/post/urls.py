@@ -11,6 +11,7 @@ from post import views
 
 router = DefaultRouter()
 router.register('', views.PostViewSet, basename='post')
+router.register(r'(?P<id>\d+)/comment', views.CommentViewSet, basename='comment')
 
 app_name = 'post'
 

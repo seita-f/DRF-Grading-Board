@@ -3,6 +3,7 @@ Views for the post APIs.
 """
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import (
     viewsets,
@@ -14,6 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from core.models import (
     Post,
+    Comment,
 )
 from post import serializers
 
@@ -40,4 +42,20 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         """ Create a new post """
-        serializer.save(user=self.request.user)  
+        serializer.save(user=self.request.user)
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.CommentSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        post_id = self.kwargs.get('post_id')
+        return Comment.objects.filter(post_id=post_id).order_by('-created_at')
+
+    def perform_create(self, serializer):
+        """ Create a new comment """
+        post_id = self.kwargs.get('post_id')
+        post = get_object_or_404(Post, pk=post_id)
+        serializer.save(user=self.request.user, post=post)
