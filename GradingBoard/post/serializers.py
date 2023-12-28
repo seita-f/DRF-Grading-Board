@@ -23,17 +23,32 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__' # ['id', 'user', 'post_id', 'text', 'created_at', 'modified_at']
-        read_only = ['id', 'user', 'post', 'created_at', 'modified_at']
+        read_only = ['id', 'user', 'created_at', 'modified_at']
 
     def create(self, validated_data):
         """ Create a comment. """
-        # user and post can not be assigned.
+        # user can not be assigned.
         validated_data.pop('user', None)
-        # リクエストからpost_idを取得
-        post_id = self.context['request'].parser_context['kwargs']['post_id']
-        comment = Comment.objects.create(user=self.context['request'].user, post=post_id, **validated_data)
+        comment = Comment.objects.create(user=self.context['request'].user, **validated_data)
 
         return comment
+
+    # def update(self, instance, validated_data):
+    #     """ Update a post. """
+    #     # Ensure that the 'user' field is read-only during updates
+    #     validated_data.pop('user', None)
+    #
+    #     # Only authenticated user can edit
+    #     auth_user = self.context['request'].user
+    #
+    #     if instance.user != auth_user:
+    #         raise serializers.ValidationError('You do not have permission to edit this post.')
+    #
+    #     for attr, value in validated_data.items():
+    #         setattr(instance, attr, value)
+    #
+    #     instance.save()
+    #     return instance
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -55,7 +70,7 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'school', 'faculty', '_class',
                   'professor', 'quality', 'difficulty', 'recommend',
                   'created_at', 'modified_at',]
-        read_only = ['id', 'user', 'created_at', 'modified_at',]
+        read_only = ['id', 'post_id', 'user', 'created_at', 'modified_at',]
 
     def create(self, validated_data):
         """ Create a post. """
@@ -86,8 +101,3 @@ class PostDetailSerializer(PostSerializer):
     """ Serializer for a post detail view """
     class Meta(PostSerializer.Meta):
         fields = PostSerializer.Meta.fields + ['description']
-
-
-    def get_comments(self):
-        """ Retrieve comments """
-        pass
