@@ -51,6 +51,7 @@ class PostViewSet(viewsets.ModelViewSet):
 class CommentViewSet(mixins.CreateModelMixin,
                      mixins.ListModelMixin,
                      viewsets.GenericViewSet,):
+    """ View for managing comment APIs. """
     serializer_class = serializers.CommentSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -69,31 +70,49 @@ class CommentViewSet(mixins.CreateModelMixin,
         serializer.save(user=self.request.user, post=post)
 
 
-class CommentDetailViewSet(# mixins.DestroyModelMixin,
-                     # mixins.UpdateModelMixin,
+class CommentDetailViewSet(mixins.DestroyModelMixin,
+                     mixins.UpdateModelMixin,
                      mixins.ListModelMixin,
                      viewsets.GenericViewSet,):
+    """ View for managing comment detail APIs. """
     serializer_class = serializers.CommentSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, post_id, comment_id):
-        post_id = self.kwargs.get('post_id')
+    # def get_queryset(self):
+    #     post_id = self.kwargs.get('id')
+    #     comment_id = self.kwargs.get('comment_id')
+    #     queryset = Comment.objects.filter(post_id=post_id, id=comment_id)
+    #     return queryset
+
+    def get(self, request, id, comment_id):
+        """ Get a certaiin comment in a post """
+        post_id = self.kwargs.get('id')
         comment_id = self.kwargs.get('comment_id')
 
         comment = get_object_or_404(Comment, post_id=post_id, id=comment_id)
         serializer = self.get_serializer(comment)
         return Response(serializer.data)
 
+    # I do not implemnt PATCH (partial_update) since there is only one filed to fix -> text
+    def update(self, request, id, comment_id):
+        """ Update a certain comment """
+        post_id = self.kwargs.get('id')
+        comment_id = self.kwargs.get('comment_id')
 
-class DummySumView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+        comment = get_object_or_404(Comment, post_id=post_id, id=comment_id)
+        serializer = self.get_serializer(comment, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
 
-    def get(self, request, id_one, id_two):
-        try:
-            # Assuming id_one and id_two are integers
-            sum_result = int(id_one) + int(id_two)
-            return Response({'sum': sum_result}, status=status.HTTP_200_OK)
-        except ValueError:
-            return Response({'error': 'Invalid input. Please provide valid integers.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.data)
+
+
+    def delete(self, request, id, comment_id):
+        """ Delete a certain comment """
+        post_id = self.kwargs.get('id')
+        comment_id = self.kwargs.get('comment_id')
+
+        comment = get_object_or_404(Comment, post_id=post_id, id=comment_id)
+        self.perform_destroy(comment)
+        return Response(status=204)

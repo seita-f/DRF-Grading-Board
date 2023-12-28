@@ -19,5 +19,8 @@ urlpatterns = [
     path('', include(router.urls)),
 
     # comment detail GET/PATCH/DELETE
-    path('<int:post_id>/comment/<int:comment_id>/', views.CommentDetailViewSet.as_view({'get': 'get'}), name='comment-detail'),
+    path('<int:id>/comment/<int:comment_id>/',
+          views.CommentDetailViewSet.as_view(
+            {'get': 'get', 'delete': 'delete', 'put': 'update'}
+        ), name='comment-detail'),
 ]
