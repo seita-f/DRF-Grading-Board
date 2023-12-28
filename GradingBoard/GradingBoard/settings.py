@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'drf_spectacular',
+    # 'drf_yasg',  # Yet Another Swagger generator
 ]
 
 MIDDLEWARE = [
@@ -146,5 +147,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
+}
 
+
+SPECTACULAR_SETTINGS = {
+   'POSTPROCESSING_HOOKS': []  # remove auto generate Enum field schema
 }

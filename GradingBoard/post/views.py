@@ -1,10 +1,12 @@
 """
 Views for the post APIs.
 """
+# DRF -----
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import views
 from rest_framework import (
     viewsets,
     mixins,
@@ -13,6 +15,7 @@ from rest_framework import (
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
+# Local -----
 from core.models import (
     Post,
     Comment,
@@ -45,17 +48,71 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-class CommentViewSet(viewsets.ModelViewSet):
+class CommentViewSet(mixins.CreateModelMixin,
+                     mixins.ListModelMixin,
+                     viewsets.GenericViewSet,):
+    """ View for managing comment APIs. """
     serializer_class = serializers.CommentSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        post_id = self.kwargs.get('post_id')
+        """ Get comments in a post  """
+        post_id = self.kwargs.get('id')
         return Comment.objects.filter(post_id=post_id).order_by('-created_at')
 
     def perform_create(self, serializer):
         """ Create a new comment """
-        post_id = self.kwargs.get('post_id')
-        post = get_object_or_404(Post, pk=post_id)
+        post_id = self.kwargs.get('id')
+
+        post = get_object_or_404(Post, id=post_id)
+        # post = Post.objects.get(id=post_id)
         serializer.save(user=self.request.user, post=post)
+
+
+class CommentDetailViewSet(mixins.DestroyModelMixin,
+                     mixins.UpdateModelMixin,
+                     mixins.ListModelMixin,
+                     viewsets.GenericViewSet,):
+    """ View for managing comment detail APIs. """
+    serializer_class = serializers.CommentSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    # def get_queryset(self):
+    #     post_id = self.kwargs.get('id')
+    #     comment_id = self.kwargs.get('comment_id')
+    #     queryset = Comment.objects.filter(post_id=post_id, id=comment_id)
+    #     return queryset
+
+    def get(self, request, id, comment_id):
+        """ Get a certaiin comment in a post """
+        post_id = self.kwargs.get('id')
+        comment_id = self.kwargs.get('comment_id')
+
+        comment = get_object_or_404(Comment, post_id=post_id, id=comment_id)
+        serializer = self.get_serializer(comment)
+        return Response(serializer.data)
+
+    # I do not implemnt PATCH (partial_update) since there is only one filed to fix -> text
+    def update(self, request, id, comment_id):
+        """ Update a certain comment """
+        post_id = self.kwargs.get('id')
+        comment_id = self.kwargs.get('comment_id')
+
+        comment = get_object_or_404(Comment, post_id=post_id, id=comment_id)
+        serializer = self.get_serializer(comment, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        return Response(serializer.data)
+
+
+    def delete(self, request, id, comment_id):
+        """ Delete a certain comment """
+        post_id = self.kwargs.get('id')
+        comment_id = self.kwargs.get('comment_id')
+
+        comment = get_object_or_404(Comment, post_id=post_id, id=comment_id)
+        self.perform_destroy(comment)
+        return Response(status=204)
