@@ -37,9 +37,11 @@ They also can write comment in its theread as well.
 | | `/post/<id>` | GET | view details of post |
 | | | PUT/PATCH | update post |
 | | | DELETE | delete post |
-| **COMMENT API** | `/post/<id>/comment` | GET| list all comments in a post |
-
-
+| **COMMENT API** | `/post/<id>/comment` | GET| list all comments in the post |
+| | | CREATE | create a new comment in the post |
+| | `/post/<id>/comment/<comment_id>` | GET | get a certain comment in the post |
+| | | PUT | update a certain comment in the post |
+| | | DELETE | delete the certain comment in the post |
 
 ## Screenshot (Version 1.0)
 
