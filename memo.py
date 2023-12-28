@@ -1,63 +1,53 @@
 """
-Serializes for recipe APIs
+Views for the post APIs.
 """
-from rest_framework import serializers
+# DRF -----
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import views
+from rest_framework import (
+    viewsets,
+    mixins,
+    status,
+)
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
+# Local -----
 from core.models import (
-    User,
-    School,
-    Faculty,
-    Class,
-    Professor,
     Post,
     Comment,
 )
+from post import serializers
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    """ Serializer for comments """
+class PostViewSet(viewsets.ModelViewSet):
+    """ View for managing post APIs. """
+    serializer_class = serializers.PostDetailSerializer
+    queryset = Post.objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
-    user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
-    post = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
+    def get_queryset(self):
+        """ Retrieve all post (newest order) """
+        return self.queryset.order_by('-created_at')
 
-    class Meta:
-        model = Comment
-        fields = '__all__' # ['id', 'user', 'post', 'text', 'created_at', 'modified_at']
-        read_only = ['id', 'user', 'created_at', 'modified_at']
+    def get_serializer_class(self):
+        """ Return the serializer class for request """
+        # except description (api/post/)
+        if self.action == 'list':
+            return serializers.PostSerializer
 
-    def create(self, validated_data):
-        """ Create a comment. """
-        # user can not be assigned.
-        validated_data.pop('user', None)
-        comment = Comment.objects.create(user=self.context['request'].user, **validated_data)
+        # with description (api/post/{id})
+        return self.serializer_class
 
-        return comment
+    def perform_create(self, serializer):
+        """ Create a new post """
+        serializer.save(user=self.request.user)
 
-    def update(self, instance, validated_data):
-        """ Update a comment. """
-        # Only authenticated user can edit
-        auth_user = self.context['request'].user
-
-        if instance.user != auth_user:
-            raise serializers.ValidationError('You do not have permission to edit this post.')
-
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-
-        instance.save()
-        return instance
-
-    # def destroy(self, instance):
-    #         """ Delete a comment. """
-    #         # Only authenticated user can delete
-    #         auth_user = self.context['request'].user
-    #
-    #         if instance.user != auth_user:
-    #             raise serializers.ValidationError('You do not have permission to delete this post.')
-    #
-    #         instance.delete()
-    #         return instance
-
+#------------------------------------------------------------------------------------------
 
 class PostSerializer(serializers.ModelSerializer):
     """ Serializer for posts. """

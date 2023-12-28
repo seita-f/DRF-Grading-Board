@@ -79,12 +79,7 @@ class CommentDetailViewSet(mixins.DestroyModelMixin,
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    # def get_queryset(self):
-    #     post_id = self.kwargs.get('id')
-    #     comment_id = self.kwargs.get('comment_id')
-    #     queryset = Comment.objects.filter(post_id=post_id, id=comment_id)
-    #     return queryset
-
+    @action(detail=True, methods=['get'])
     def get(self, request, id, comment_id):
         """ Get a certaiin comment in a post """
         post_id = self.kwargs.get('id')
@@ -95,6 +90,7 @@ class CommentDetailViewSet(mixins.DestroyModelMixin,
         return Response(serializer.data)
 
     # I do not implemnt PATCH (partial_update) since there is only one filed to fix -> text
+    @action(detail=True, methods=['put'])
     def update(self, request, id, comment_id):
         """ Update a certain comment """
         post_id = self.kwargs.get('id')
@@ -107,7 +103,7 @@ class CommentDetailViewSet(mixins.DestroyModelMixin,
 
         return Response(serializer.data)
 
-
+    @action(detail=True, methods=['delete'])
     def delete(self, request, id, comment_id):
         """ Delete a certain comment """
         post_id = self.kwargs.get('id')

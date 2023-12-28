@@ -11,14 +11,14 @@ from post import views
 
 router = DefaultRouter()
 router.register('', views.PostViewSet, basename='post') # Post
-router.register(r'(?P<id>\d+)/comment', views.CommentViewSet, basename='comment') # comments (GET List, CREATE Comment)
+router.register(r'(?P<id>\d+)/comment', views.CommentViewSet, basename='comment') # Comments (GET List, CREATE Comment)
 
 app_name = 'post'
 
 urlpatterns = [
     path('', include(router.urls)),
 
-    # comment detail GET/PATCH/DELETE
+    # Comment detail GET/PATCH/DELETE
     path('<int:id>/comment/<int:comment_id>/',
           views.CommentDetailViewSet.as_view(
             {'get': 'get', 'delete': 'delete', 'put': 'update'}
