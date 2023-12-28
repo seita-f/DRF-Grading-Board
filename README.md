@@ -23,8 +23,6 @@ They also can write comment in its theread as well.
 - React
 - Bootstrap
 
-## Database Diagram
-
 
 ## Endpoints
 | API | endpoint | HTTP Method | Description |
