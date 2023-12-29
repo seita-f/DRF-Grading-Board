@@ -30,11 +30,11 @@ They also can write comment in its theread as well.
 | **USER API** | `/user/create` | POST | register a new user |
 | | `/user/token` | POST | create a new token |
 | | `/user/me` | GET | get a profile |
-| | | PUT/PATCH | update a profile |
+| | | PUT / PATCH | update a profile |
 | **POST API** | `/post/` | GET| list all posts |
 | | | POST | create a post |
 | | `/post/<id>` | GET | view details of post |
-| | | PUT/PATCH | update a post |
+| | | PUT / PATCH | update a post |
 | | | DELETE | delete a post |
 | **COMMENT API** | `/post/<id>/comment` | GET| list all comments in the post |
 | | | CREATE | create a new comment in the post |
