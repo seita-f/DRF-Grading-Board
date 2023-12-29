@@ -4,7 +4,7 @@ That is why I created this app by adding features that I thought would be nice t
 
 
 # So what is this app?
-After user authorization, each user can make a thread and rate class/professor between 1 to 5 and write its reputations. Another user basically can find a thread in main timeline or using seaching bar.
+After user authorization, each user can make a thread and rate school/faculty/class/professor between 1 to 5 and write its reputations. Another user basically can find a thread in main timeline or using filter.
 They also can write comment in its theread as well. 
 
 
