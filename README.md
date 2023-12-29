@@ -12,7 +12,7 @@ They also can write comment in its theread as well.
 
 ### Environment
 - Mac OS
-- Atom
+- Atom (IED)
 
 ### Back-end 
 - Django & Django Rest Framework <br>
