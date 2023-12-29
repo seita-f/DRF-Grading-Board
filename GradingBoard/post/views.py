@@ -5,6 +5,8 @@ Views for the post APIs.
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
+from rest_framework.exceptions import PermissionDenied
+from django.http import Http404
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import views
 from rest_framework import (
@@ -47,6 +49,21 @@ class PostViewSet(viewsets.ModelViewSet):
         """ Create a new post """
         serializer.save(user=self.request.user)
 
+    def destroy(self, request, *args, **kwargs):
+        """ Delete a post """
+        try:
+            instance = self.get_object()
+
+            # Check if the requesting user is the creator of the post
+            if instance.user == request.user:
+                instance.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                raise PermissionDenied("You do not have permission to delete this post.")
+
+        except Http404:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 class CommentViewSet(mixins.CreateModelMixin,
                      mixins.ListModelMixin,
@@ -69,6 +86,21 @@ class CommentViewSet(mixins.CreateModelMixin,
         # post = Post.objects.get(id=post_id)
         serializer.save(user=self.request.user, post=post)
 
+    def destroy(self, request, *args, **kwargs):
+        """ Delete a comment """
+        try:
+            instance = self.get_object()
+
+            # Check if the requesting user is the creator of the post
+            if instance.user == request.user:
+                instance.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                raise PermissionDenied("You do not have permission to delete this post.")
+
+        except Http404:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 class CommentDetailViewSet(mixins.DestroyModelMixin,
                      mixins.UpdateModelMixin,
@@ -79,12 +111,7 @@ class CommentDetailViewSet(mixins.DestroyModelMixin,
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    # def get_queryset(self):
-    #     post_id = self.kwargs.get('id')
-    #     comment_id = self.kwargs.get('comment_id')
-    #     queryset = Comment.objects.filter(post_id=post_id, id=comment_id)
-    #     return queryset
-
+    @action(detail=True, methods=['get'])
     def get(self, request, id, comment_id):
         """ Get a certaiin comment in a post """
         post_id = self.kwargs.get('id')
@@ -95,6 +122,7 @@ class CommentDetailViewSet(mixins.DestroyModelMixin,
         return Response(serializer.data)
 
     # I do not implemnt PATCH (partial_update) since there is only one filed to fix -> text
+    @action(detail=True, methods=['put'])
     def update(self, request, id, comment_id):
         """ Update a certain comment """
         post_id = self.kwargs.get('id')
@@ -107,7 +135,7 @@ class CommentDetailViewSet(mixins.DestroyModelMixin,
 
         return Response(serializer.data)
 
-
+    @action(detail=True, methods=['delete'])
     def delete(self, request, id, comment_id):
         """ Delete a certain comment """
         post_id = self.kwargs.get('id')
