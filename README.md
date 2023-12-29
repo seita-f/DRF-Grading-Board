@@ -29,7 +29,8 @@ They also can write comment in its theread as well.
 | --- | --- | --- | --- |
 | **USER API** | `/user/create` | POST | register a new user |
 | | `/user/token` | POST | create a new token |
-| | `/user/me` | PATCH | update a profile |
+| | `/user/me` | GET | get a profile |
+| | | PUT/PATCH | update a profile |
 | **POST API** | `/post/` | GET| list all posts |
 | | | POST | create a post |
 | | `/post/<id>` | GET | view details of post |
