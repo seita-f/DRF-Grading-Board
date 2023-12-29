@@ -31,7 +31,7 @@ They also can write comment in its theread as well.
 | | `/user/token` | POST | create a new token |
 | | `/user/me` | GET | get a profile |
 | | | PUT / PATCH | update a profile |
-| **POST API** | `/post/` | GET| list all posts |
+| **POST API** | `/post/` | GET| list all posts (+ filter function)|
 | | | POST | create a post |
 | | `/post/<id>` | GET | view details of post |
 | | | PUT / PATCH | update a post |
