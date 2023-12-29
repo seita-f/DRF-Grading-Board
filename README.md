@@ -33,12 +33,12 @@ They also can write comment in its theread as well.
 | **POST API** | `/post/` | GET| list all posts |
 | | | POST | create a post |
 | | `/post/<id>` | GET | view details of post |
-| | | PUT/PATCH | update post |
-| | | DELETE | delete post |
+| | | PUT/PATCH | update a post |
+| | | DELETE | delete a post |
 | **COMMENT API** | `/post/<id>/comment` | GET| list all comments in the post |
 | | | CREATE | create a new comment in the post |
-| | `/post/<id>/comment/<comment_id>` | GET | get a certain comment in the post |
-| | | PUT | update a certain comment in the post |
+| | `/post/<id>/comment/<comment_id>` | GET | get the certain comment in the post |
+| | | PUT | update the certain comment in the post |
 | | | DELETE | delete the certain comment in the post |
 
 ## Screenshot (Version 1.0)
