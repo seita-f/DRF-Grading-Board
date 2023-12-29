@@ -16,7 +16,7 @@ They also can write comment in its theread as well.
 
 ### Back-end 
 - Django & Django Rest Framework <br>
-  (Swagger)
+- Swagger
 - Python 3.11.0 venv
   
 ### Front-end (Currently working on this part)
