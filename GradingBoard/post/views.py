@@ -22,6 +22,9 @@ from core.models import (
     Post,
     Comment,
 )
+from .filters import (
+    PostFilter,
+)
 from post import serializers
 
 
@@ -31,6 +34,9 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
+    # filter
+    filterset_class = PostFilter
 
     def get_queryset(self):
         """ Retrieve all post (newest order) """
@@ -86,23 +92,8 @@ class CommentViewSet(mixins.CreateModelMixin,
         # post = Post.objects.get(id=post_id)
         serializer.save(user=self.request.user, post=post)
 
-    def destroy(self, request, *args, **kwargs):
-        """ Delete a comment """
-        try:
-            instance = self.get_object()
 
-            # Check if the requesting user is the creator of the post
-            if instance.user == request.user:
-                instance.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
-            else:
-                raise PermissionDenied("You do not have permission to delete this post.")
-
-        except Http404:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-class CommentDetailViewSet(mixins.DestroyModelMixin,
+class CommentDetailViewSet(# mixins.DestroyModelMixin,
                      mixins.UpdateModelMixin,
                      mixins.ListModelMixin,
                      viewsets.GenericViewSet,):
@@ -136,11 +127,17 @@ class CommentDetailViewSet(mixins.DestroyModelMixin,
         return Response(serializer.data)
 
     @action(detail=True, methods=['delete'])
-    def delete(self, request, id, comment_id):
+    def delete(self, request, *args, **kwargs):
         """ Delete a certain comment """
         post_id = self.kwargs.get('id')
         comment_id = self.kwargs.get('comment_id')
 
         comment = get_object_or_404(Comment, post_id=post_id, id=comment_id)
-        self.perform_destroy(comment)
+
+        # Compare the comment owner with the authenticated user
+        if comment.user != request.user:
+            return Response({"detail": "You don't have permission to delete this comment."},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        comment.delete()
         return Response(status=204)

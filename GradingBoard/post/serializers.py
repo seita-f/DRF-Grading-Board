@@ -13,6 +13,26 @@ from core.models import (
     Comment,
 )
 
+class SchoolSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = School
+        fields = '__all__'
+
+class FacultySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Faculty
+        fields = '__all__'
+
+class ClassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Class
+        fields = '__all__'
+
+class ProfessorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Professor
+        fields = '__all__'
+
 
 class CommentSerializer(serializers.ModelSerializer):
     """ Serializer for comments """
@@ -47,17 +67,6 @@ class CommentSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    # def destroy(self, instance):
-    #         """ Delete a comment. """
-    #         # Only authenticated user can delete
-    #         auth_user = self.context['request'].user
-    #
-    #         if instance.user != auth_user:
-    #             raise serializers.ValidationError('You do not have permission to delete this post.')
-    #
-    #         instance.delete()
-    #         return instance
-
 
 class PostSerializer(serializers.ModelSerializer):
     """ Serializer for posts. """
@@ -69,8 +78,6 @@ class PostSerializer(serializers.ModelSerializer):
     professor = serializers.PrimaryKeyRelatedField(queryset=Professor.objects.all())
 
     user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
-
-    # comments = PostCommentSerializer(source='comments.text')
 
     class Meta:
         model = Post
@@ -103,6 +110,23 @@ class PostSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+    def to_representation(self, instance):
+        """ Handle associated fields """
+        representation = super().to_representation(instance)
+
+        # Add details for related fields
+        school_data = SchoolSerializer(instance.school).data
+        faculty_data = FacultySerializer(instance.faculty).data
+        class_data = ClassSerializer(instance._class).data
+        professor_data = ProfessorSerializer(instance.professor).data
+
+        representation['school'] = school_data
+        representation['faculty'] = faculty_data
+        representation['_class'] = class_data
+        representation['professor'] = professor_data
+
+        return representation
 
 
 class PostDetailSerializer(PostSerializer):
