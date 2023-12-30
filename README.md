@@ -59,14 +59,14 @@ $ python manage.py test
 ```
 Then, go to http://127.0.0.1:8000/api/docs#/
 
-** 1. Create User **
+1. Create User 
     1. Open /api/user/create and click on the "Try it out" button.
     2. Fill in the required account information in the provided fields.
     3. Click the "Execute" button to submit the request and create a new user.
 ![Screen Shot 2023-12-30 at 17 43 37](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/4a7f6f3f-cb6d-4e0d-8383-20a3de06d604)
 
 
-** 2. Token Auth **
+2. Token Auth 
     1. Open POST api/user/token and fill in the required account information
     2. Copy the provided token
    ![Screen Shot 2023-12-30 at 17 50 47](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/605fa237-2946-4ff2-9717-aa0e0c2e80a3)
@@ -76,10 +76,10 @@ Then, go to http://127.0.0.1:8000/api/docs#/
 
 
 
-** 3. Make a post **
+3. Make a post
 
 
-** 4. Make a comment **
+4. Make a comment
 
 
 
