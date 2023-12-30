@@ -60,14 +60,14 @@ $ python manage.py test
 Then, go to http://127.0.0.1:8000/api/docs#/
 
 1. Create User 
-    1. Open /api/user/create and click on the "Try it out" button.
+    1. Open `POST /api/user/create` and click on the "Try it out" button.
     2. Fill in the required account information in the provided fields.
     3. Click the "Execute" button to submit the request and create a new user.
 ![Screen Shot 2023-12-30 at 17 43 37](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/4a7f6f3f-cb6d-4e0d-8383-20a3de06d604)
 
 
 2. Token Auth 
-    1. Open POST api/user/token and fill in the required account information
+    1. Open `POST api/user/token` and fill in the required account information
     2. Copy the provided token
    ![Screen Shot 2023-12-30 at 17 50 47](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/605fa237-2946-4ff2-9717-aa0e0c2e80a3)
    ![Screen Shot 2023-12-30 at 17 51 00](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/879683d3-db07-4e82-a14e-89909d121373)
@@ -76,7 +76,7 @@ Then, go to http://127.0.0.1:8000/api/docs#/
 
 
 3. Make a post
-    1. Open POST api/post/ and fill in the required info for a post (For now, we have to pass primary key for shcool, faculty, class and professor.) and click execute button.
+    1. Open `POST api/post/` and fill in the required info for a post (For now, we have to pass primary key for shcool, faculty, class and professor.) and click execute button.
     ![Screen Shot 2023-12-30 at 18 20 45](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/12fcdf2c-6751-4780-93bf-375e3c031891)
 
     2. We can check created post executing GET api/post (add filter or blank)
@@ -85,14 +85,13 @@ Then, go to http://127.0.0.1:8000/api/docs#/
  
 <br>
 (Auth user only can edit and delete his own post)
-
+<br>
 4. Make a comment
-    1. Open POST api/post/{id}/comment/, pass post id, fill in the required info for a comment, and execute.
+    1. Open `POST api/post/{id}/comment/`, pass post id, fill in the required info for a comment, and execute.
 ![Screen Shot 2023-12-30 at 18 33 28](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/01d3d8a9-1f28-4d28-ae86-61c3d6403fe1)
 
-    2. We can check all comments in a certain post by executing GET api/post/{id}/comment 
+    2. We can check all comments in a certain post by executing `GET api/post/{id}/comment`
 ![Screen Shot 2023-12-30 at 18 34 48](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/0695a8f8-cf6f-4e18-b7d9-266d3b030f43)
-
 <br>
 (Auth user only can fix and delete his own comment)
 
