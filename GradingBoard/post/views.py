@@ -120,6 +120,7 @@ class CommentDetailViewSet(# mixins.DestroyModelMixin,
         comment_id = self.kwargs.get('comment_id')
 
         comment = get_object_or_404(Comment, post_id=post_id, id=comment_id)
+
         serializer = self.get_serializer(comment, data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
@@ -136,7 +137,7 @@ class CommentDetailViewSet(# mixins.DestroyModelMixin,
 
         # Compare the comment owner with the authenticated user
         if comment.user != request.user:
-            return Response({"detail": "You don't have permission to delete this comment."},
+            return Response({'detail': "You don't have permission to delete this comment."},
                             status=status.HTTP_403_FORBIDDEN)
 
         comment.delete()

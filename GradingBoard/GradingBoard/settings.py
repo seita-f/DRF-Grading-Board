@@ -49,9 +49,14 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'django_filters',
     # 'drf_yasg',  # Yet Another Swagger generator
+    'corsheaders', # Django <-> React
 ]
 
 MIDDLEWARE = [
+    # Django <-> React
+    'corsheaders.middleware.CorsMiddleware', # Added
+    'django.middleware.common.CommonMiddleware', # Added
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -153,3 +158,8 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
    'POSTPROCESSING_HOOKS': []  # remove auto generate Enum field schema
 }
+
+# Django <-> React
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000'
+]
