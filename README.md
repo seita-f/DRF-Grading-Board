@@ -42,10 +42,7 @@ They also can write comment in its theread as well.
 | | | PUT | update the certain comment in the post |
 | | | DELETE | delete the certain comment in the post |
 
-## Screenshot (Version 1.0)
-
-
-## Getting Started
+## Getting Started & Screenshots
 
 ```
 # activate virtual env (mac)
@@ -60,6 +57,12 @@ $ python manage.py runserver
 # run test
 $ python manage.py test
 ```
+Then, go to `http://127.0.0.1:8000/api/docs#/'
+
+
+
+
+
 
 ## Author
 Seita Fujiwara 2023
