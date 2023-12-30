@@ -59,7 +59,7 @@ $ python manage.py test
 ```
 Then, go to http://127.0.0.1:8000/api/docs#/
 
-1. Create User
+1. <br>Create User</br>
     1. Open /api/user/create and click on the "Try it out" button.
     2. Fill in the required account information in the provided fields.
     3. Click the "Execute" button to submit the request and create a new user.
