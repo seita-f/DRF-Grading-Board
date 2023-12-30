@@ -60,6 +60,10 @@ $ python manage.py test
 Then, go to http://127.0.0.1:8000/api/docs#/
 
 1. Create User
+   1. open api/user/create
+   2. Click try out
+   3. Fill your account info and click execute
+
 
 1. Token Auth
 
