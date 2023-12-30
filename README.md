@@ -42,7 +42,7 @@ They also can write comment in its theread as well.
 | | | PUT | update the certain comment in the post |
 | | | DELETE | delete the certain comment in the post |
 
-## Getting Started & Screenshots
+## Getting Started & Brief introduction
 
 ```
 # activate virtual env (mac)
@@ -75,15 +75,26 @@ Then, go to http://127.0.0.1:8000/api/docs#/
   ![Screen Shot 2023-12-30 at 17 53 04](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/bb02a970-78f8-4c77-acc8-8cb795959e7e)
 
 
-
 3. Make a post
+    1. Open POST api/post/ and fill in the required info for a post (For now, we have to pass primary key for shcool, faculty, class and professor.) and click execute button.
+    ![Screen Shot 2023-12-30 at 18 20 45](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/12fcdf2c-6751-4780-93bf-375e3c031891)
 
+    2. We can check created post executing GET api/post (add filter or blank)
+  ![Screen Shot 2023-12-30 at 18 29 57](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/6c09c737-674d-4b06-9150-ccc2dfeb5f55)
+  ![Screen Shot 2023-12-30 at 18 29 41](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/18525342-01d0-4894-9089-2d15e1dfb1f6)
+ 
+<br>
+(Auth user only can edit and delete his own post)
 
 4. Make a comment
+    1. Open POST api/post/{id}/comment/, pass post id, fill in the required info for a comment, and execute.
+![Screen Shot 2023-12-30 at 18 33 28](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/01d3d8a9-1f28-4d28-ae86-61c3d6403fe1)
 
+    2. We can check all comments in a certain post by executing GET api/post/{id}/comment 
+![Screen Shot 2023-12-30 at 18 34 48](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/0695a8f8-cf6f-4e18-b7d9-266d3b030f43)
 
-
-
+<br>
+(Auth user only can fix and delete his own comment)
 
 
 ## Author
