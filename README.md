@@ -60,18 +60,18 @@ $ python manage.py test
 Then, go to http://127.0.0.1:8000/api/docs#/
 
 1. Create User
-  1. Open /api/user/create and click on the "Try it out" button.
-  1. Fill in the required account information in the provided fields.
-  1. Click the "Execute" button to submit the request and create a new user.
+    1. Open /api/user/create and click on the "Try it out" button.
+    2. Fill in the required account information in the provided fields.
+    3. Click the "Execute" button to submit the request and create a new user.
 ![Screen Shot 2023-12-30 at 17 43 37](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/4a7f6f3f-cb6d-4e0d-8383-20a3de06d604)
 
 
 2. Token Auth
-  1. Open POST api/user/token and fill in the required account information
-  1. Copy the provided token
+    1. Open POST api/user/token and fill in the required account information
+    2. Copy the provided token
    ![Screen Shot 2023-12-30 at 17 50 47](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/605fa237-2946-4ff2-9717-aa0e0c2e80a3)
    ![Screen Shot 2023-12-30 at 17 51 00](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/879683d3-db07-4e82-a14e-89909d121373)
-  1. Click authorize button (Top Right of the Main Page), put `Token <copied token>` and click Authorize button.
+    3. Click authorize button (Top Right of the Main Page), put `Token <copied token>` and click Authorize button.
   ![Screen Shot 2023-12-30 at 17 53 04](https://github.com/seita-f/Grading-Board-DRF-React/assets/128184233/bb02a970-78f8-4c77-acc8-8cb795959e7e)
 
 
