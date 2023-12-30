@@ -57,7 +57,17 @@ $ python manage.py runserver
 # run test
 $ python manage.py test
 ```
-Then, go to `http://127.0.0.1:8000/api/docs#/'
+Then, go to http://127.0.0.1:8000/api/docs#/
+
+1. Create User
+
+1. Token Auth
+
+
+1. Make a post 
+
+
+1. Make a comment
 
 
 
