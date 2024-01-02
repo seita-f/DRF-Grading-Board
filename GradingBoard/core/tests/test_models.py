@@ -102,7 +102,7 @@ class ModelsTest(TestCase):
             description='Description',
             school=models.School.objects.create(name='University XYZ'),
             faculty=models.Faculty.objects.create(school_id=1, name='Faculty ABC'),
-            class_name=models.Class.objects.create(faculty_id=1, name='Class DEF'),
+            _class=models.Class.objects.create(faculty_id=1, name='Class DEF'),
             professor=models.Professor.objects.create(faculty_id=1, name='Professor GHI'),
             quality=5,
             difficulty=3,
@@ -112,3 +112,36 @@ class ModelsTest(TestCase):
         )
 
         self.assertEqual(str(post), post.description[:25])
+
+    def test_create_comment(self):
+        """ Test creating a comment is successful """
+        user = get_user_model().objects.create_user(
+            'test@example.com',
+            'pass123',
+        )
+        user2 = get_user_model().objects.create_user(
+            'test2@example.com',
+            'pass123',
+        )
+        post = models.Post.objects.create(
+            user=user,
+            description='Description',
+            school=models.School.objects.create(name='University XYZ'),
+            faculty=models.Faculty.objects.create(school_id=1, name='Faculty ABC'),
+            _class=models.Class.objects.create(faculty_id=1, name='Class DEF'),
+            professor=models.Professor.objects.create(faculty_id=1, name='Professor GHI'),
+            quality=5,
+            difficulty=3,
+            recommend=True,
+            created_at=timezone.now(),
+            modified_at=timezone.now(),
+        )
+        comment = models.Comment.objects.create(
+            user = user2,
+            post = post,
+            text = 'This is a comment in a post',
+            created_at=timezone.now(),
+            modified_at=timezone.now(),
+        )
+
+        self.assertEqual(str(comment), comment.text[:25])
