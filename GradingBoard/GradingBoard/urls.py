@@ -27,7 +27,7 @@ urlpatterns = [
 
     # App
     path('api/user/', include('user.urls')),
-    path('api/post/', include('post.urls')),
+    path('api/post/', include('post.urls'), name='post'),
 
     # install schema
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
