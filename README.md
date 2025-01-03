@@ -9,15 +9,10 @@ They also can write comment in its theread as well.
 
 
 ## Build With
-
-### Environment
-- Mac OS
-- Atom (IED)
-
 ### Back-end 
 - Django & Django Rest Framework <br>
 - Swagger
-- Python 3.11.0 venv
+- Python 3.11.0 
   
 ### Front-end (Currently working on this part)
 - React
