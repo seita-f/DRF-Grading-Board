@@ -13,11 +13,6 @@ They also can write comment in its theread as well.
 - Django & Django Rest Framework <br>
 - Swagger
 - Python 3.11.0 
-  
-### Front-end (Currently working on this part)
-- React
-- Bootstrap
-
 
 ## Endpoints
 | API | endpoint | HTTP Method | Description |
